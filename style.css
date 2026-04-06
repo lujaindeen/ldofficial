@@ -317,6 +317,16 @@ footer {
    RESPONSIVE
    =========================== */
 @media (max-width: 768px) {
+  #hero {
+    justify-content: center;
+    padding-top: 6rem;
+    padding-bottom: 3rem;
+  }
+
+  .hero-name {
+    font-size: clamp(4.5rem, 20vw, 7rem);
+  }
+
   .hero-layout {
     grid-template-columns: 1fr;
     gap: 2rem;
