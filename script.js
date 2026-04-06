@@ -66,7 +66,7 @@ document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
     const float majorLineFrequency = 5.0;
     const float minorLineFrequency = 1.0;
     const float scale = 5.0;
-    const vec4 lineColor = vec4(0.55, 0.28, 0.18, 1.0);
+    const vec4 lineColor = vec4(0.20, 0.52, 0.42, 1.0);
     const float minLineWidth = 0.01;
     const float maxLineWidth = 0.15;
     const float lineSpeed = 1.0 * overallSpeed;
@@ -104,7 +104,7 @@ document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
       space.y += random(space.x * warpFrequency + iTime * warpSpeed) * warpAmplitude * (0.5 + horizontalFade);
       space.x += random(space.y * warpFrequency + iTime * warpSpeed + 2.0) * warpAmplitude * horizontalFade;
 
-      vec4 lines = vec4(0.0);
+      float lineTotal = 0.0;
       vec4 bgColor1 = vec4(0.851, 0.722, 0.678, 1.0);
       vec4 bgColor2 = vec4(0.78, 0.630, 0.560, 1.0);
 
@@ -122,12 +122,12 @@ document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
         vec2 circlePosition = vec2(circleX, getPlasmaY(circleX, horizontalFade, offset));
         float circle = drawCircle(circlePosition, 0.01, space) * 4.0;
 
-        line = line + circle;
-        lines += line * lineColor * rand * 0.4;
+        lineTotal += (line + circle) * rand;
       }
 
+      lineTotal = clamp(lineTotal, 0.0, 1.0);
       vec4 fragColor = mix(bgColor1, bgColor2, uv.x);
-      fragColor += lines;
+      fragColor = mix(fragColor, lineColor, lineTotal * 0.75);
       fragColor.a = 1.0;
 
       gl_FragColor = fragColor;
