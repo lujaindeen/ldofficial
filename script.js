@@ -1,29 +1,23 @@
-// =====================
-// NAV scroll behavior
-// =====================
-const nav = document.querySelector('nav');
+// Nav scroll behavior
+const header = document.querySelector('header');
 window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 60);
+  header.classList.toggle('scrolled', window.scrollY > 50);
 });
 
-
-
-
-// =====================
-// FADE-IN on scroll
-// =====================
+// Fade-in on scroll
 const fadeTargets = [
-  '.hero-inner > *',
-  '.section-header',
-  '.about-text p',
-  '.pillar',
-  '.post-card',
-  '.contact-inner > *',
+  '.hero-name',
+  '.hero-bio',
+  '.about-hello',
+  '.detail-row',
+  '.contact-heading',
+  '.contact-link',
+  '.footer-brand',
 ];
 
 document.querySelectorAll(fadeTargets.join(', ')).forEach((el, i) => {
   el.classList.add('fade-up');
-  el.style.transitionDelay = `${(i % 5) * 80}ms`;
+  el.style.transitionDelay = `${(i % 6) * 60}ms`;
 });
 
 const observer = new IntersectionObserver(
@@ -33,7 +27,7 @@ const observer = new IntersectionObserver(
       observer.unobserve(entry.target);
     }
   }),
-  { threshold: 0.12 }
+  { threshold: 0.1 }
 );
 
 document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));

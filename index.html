@@ -3,148 +3,88 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lujain Deen — SRE & Thinker</title>
+  <title>Lujain Deen</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav>
-    <a href="#hero" class="nav-name">LD</a>
-    <div class="nav-status">
-      <span class="status-dot"></span>
-      <span>Online</span>
-    </div>
-    <ul>
-      <li><a href="#about">About</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
+  <header>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="https://www.linkedin.com/in/lujain-deen-54b63911b/" target="_blank">Work</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <span class="nav-domain">lujain.deen</span>
+    </nav>
+  </header>
 
-  <!-- HERO -->
-  <section id="hero">
-    <div class="hero-video">
-      <video autoplay muted loop playsinline>
-        <source src="Background_Vid.mp4" type="video/mp4" />
-        <source src="Background_Vid.MOV" type="video/quicktime" />
-      </video>
-    </div>
-    <div class="hero-overlay"></div>
-    <div class="hero-glow"></div>
+  <main>
 
-    <div class="hero-inner">
-      <div class="hero-annotation">
-        <span class="hero-anno-line"></span>
-        <span class="hero-anno-text">SRE &nbsp;·&nbsp; Thinker &nbsp;·&nbsp; Researcher</span>
-      </div>
-      <h1>Lujain<br />Deen</h1>
-      <div class="hero-bottom">
-        <span class="hero-location">Based in the cloud.</span>
-        <a href="#about" class="hero-cta">
-          <span>Enter</span>
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <path d="M7 2v10M2 8l5 4 5-4" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section id="about">
-    <div class="container">
-
-      <div class="about-header">
-        <span class="section-index">01 / About</span>
-        <blockquote class="about-quote">
-          As a Site Reliability Engineer, I ensure that customer applications hosted in the cloud
-          remain stable and performant. Beyond managing day-to-day operations, I look for
-          opportunities to improve — whether in process, tooling, or how the team works.
-        </blockquote>
-      </div>
-
-      <div class="about-grid">
-        <div class="about-text">
-          <p>
-            Outside of work, I'm drawn to the questions that don't have dashboards.
-            Philosophy, metaphysics, the nature of existence — particularly as understood
-            through the Islamic intellectual tradition. There's something deeply compelling
-            about a worldview where reason and revelation aren't at war, but in conversation.
-          </p>
-          <p>
-            This space is where I think out loud.
-          </p>
+    <!-- HERO -->
+    <section id="hero">
+      <div class="hero-layout">
+        <div class="hero-name-col">
+          <h1 class="hero-name">lujain<br>deen</h1>
         </div>
+        <div class="hero-meta-col">
+          <p class="hero-bio">I am a site reliability engineer, researcher, and thinker currently based in the UK. I keep systems running and spend the rest of my time on questions that don't have dashboards.</p>
+        </div>
+      </div>
+    </section>
 
-        <div class="about-pillars">
-          <div class="pillar">
-            <span class="pillar-num">01</span>
-            <div class="pillar-content">
-              <h4>Systems</h4>
-              <p>SRE, reliability engineering, the art of building things that last.</p>
-            </div>
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="about-layout">
+        <div class="about-intro-col">
+          <p class="about-hello">hello, I'm Lujain Deen — an SRE and researcher based in the UK. I build reliable systems and explore the questions that resist easy answers.</p>
+        </div>
+        <div class="about-details-col">
+          <div class="detail-row">
+            <span class="detail-label">Currently</span>
+            <span class="detail-value">Site Reliability Engineer at IFS</span>
           </div>
-          <div class="pillar">
-            <span class="pillar-num">02</span>
-            <div class="pillar-content">
-              <h4>Philosophy</h4>
-              <p>Metaphysics, ontology, the questions that resist easy answers.</p>
-            </div>
+          <div class="detail-row">
+            <span class="detail-label">Interests</span>
+            <span class="detail-value">Islamic metaphysics, philosophy, systems thinking</span>
           </div>
-          <div class="pillar">
-            <span class="pillar-num">03</span>
-            <div class="pillar-content">
-              <h4>Tradition</h4>
-              <p>Islamic thought, the golden age of inquiry, sacred knowledge.</p>
-            </div>
+          <div class="detail-row">
+            <span class="detail-label">Location</span>
+            <span class="detail-value">United Kingdom</span>
           </div>
         </div>
       </div>
+    </section>
 
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact">
-    <div class="container">
-      <div class="contact-inner">
-        <div class="contact-header">
-          <span class="section-index">02 / Contact</span>
-          <h2 class="contact-heading"><em>Let's<br />connect</em></h2>
-        </div>
-        <div class="contact-body">
-          <p class="contact-sub">Whether you want to talk systems, ideas,<br />or something in between — I'm here.</p>
-          <div class="contact-links">
-            <a href="mailto:lujain888@gmail.com" class="contact-link">
-              <span>Email</span>
-              <span class="contact-arrow">↗</span>
-            </a>
-            <a href="https://www.linkedin.com/in/lujain-deen-54b63911b/" target="_blank" class="contact-link">
-              <span>LinkedIn</span>
-              <span class="contact-arrow">↗</span>
-            </a>
-            <a href="#" class="contact-link">
-              <span>GitHub</span>
-              <span class="contact-arrow">↗</span>
-            </a>
-            <a href="https://instagram.com/lujain888" target="_blank" class="contact-link">
-              <span>Instagram</span>
-              <span class="contact-arrow">↗</span>
-            </a>
-          </div>
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="contact-layout">
+        <h2 class="contact-heading">let's<br>connect</h2>
+        <div class="contact-links">
+          <a href="mailto:lujain888@gmail.com" class="contact-link">
+            <span>Email</span><span>↗</span>
+          </a>
+          <a href="https://www.linkedin.com/in/lujain-deen-54b63911b/" target="_blank" class="contact-link">
+            <span>LinkedIn</span><span>↗</span>
+          </a>
+          <a href="https://github.com" target="_blank" class="contact-link">
+            <span>GitHub</span><span>↗</span>
+          </a>
+          <a href="https://instagram.com/lujain888" target="_blank" class="contact-link">
+            <span>Instagram</span><span>↗</span>
+          </a>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- FOOTER -->
+  </main>
+
   <footer>
-    <span class="footer-mark">LD</span>
-    <p>Built with intention &nbsp;·&nbsp; Lujain Deen 2026</p>
-    <span class="footer-uptime">Systems running.</span>
+    <div class="footer-brand">lujain deen</div>
+    <p class="footer-copy">© 2026 Lujain Deen. All rights reserved.</p>
   </footer>
 
   <script src="script.js"></script>
