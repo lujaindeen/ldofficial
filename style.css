@@ -108,7 +108,22 @@ header.scrolled .nav-domain {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  position: relative;
   background: #d9b8ad;
+}
+
+#hero-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+#hero .hero-layout {
+  position: relative;
+  z-index: 1;
 }
 
 #hero .hero-name {
@@ -121,7 +136,7 @@ header.scrolled .nav-domain {
 
 .hero-layout {
   display: grid;
-  grid-template-columns: 1fr 300px;
+  grid-template-columns: 1fr;
   gap: 3rem;
   align-items: start;
   width: 100%;
@@ -129,7 +144,7 @@ header.scrolled .nav-domain {
 
 .hero-name {
   font-family: var(--font-sans);
-  font-size: clamp(5rem, 14vw, 11rem);
+  font-size: clamp(5rem, 22vw, 22rem);
   font-weight: 700;
   line-height: 0.9;
   letter-spacing: -0.03em;
