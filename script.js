@@ -66,7 +66,7 @@ document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
     const float majorLineFrequency = 5.0;
     const float minorLineFrequency = 1.0;
     const float scale = 5.0;
-    const vec4 lineColor = vec4(0.20, 0.52, 0.42, 1.0);
+    const vec4 lineColor = vec4(0.75, 0.55, 0.15, 1.0);
     const float minLineWidth = 0.01;
     const float maxLineWidth = 0.15;
     const float lineSpeed = 1.0 * overallSpeed;
@@ -105,8 +105,8 @@ document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
       space.x += random(space.y * warpFrequency + iTime * warpSpeed + 2.0) * warpAmplitude * horizontalFade;
 
       float lineTotal = 0.0;
-      vec4 bgColor1 = vec4(0.851, 0.722, 0.678, 1.0);
-      vec4 bgColor2 = vec4(0.78, 0.630, 0.560, 1.0);
+      vec4 bgColor1 = vec4(0.11, 0.11, 0.11, 1.0);
+      vec4 bgColor2 = vec4(0.08, 0.08, 0.08, 1.0);
 
       for(int l = 0; l < linesPerGroup; l++) {
         float normalizedLineIndex = float(l) / float(linesPerGroup);

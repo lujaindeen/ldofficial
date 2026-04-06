@@ -72,30 +72,18 @@ nav {
 .nav-links a {
   font-size: 0.78rem;
   font-weight: 400;
-  color: #1c1c1c;
+  color: var(--muted);
   letter-spacing: 0.02em;
   transition: color 0.3s;
 }
 
-.nav-links a:hover { color: #000; }
+.nav-links a:hover { color: var(--text); }
 
 .nav-domain {
   font-size: 0.78rem;
-  color: #1c1c1c;
+  color: var(--muted);
   letter-spacing: 0.02em;
   transition: color 0.3s;
-}
-
-header.scrolled .nav-links a {
-  color: var(--muted);
-}
-
-header.scrolled .nav-links a:hover {
-  color: var(--text);
-}
-
-header.scrolled .nav-domain {
-  color: var(--muted);
 }
 
 
@@ -109,7 +97,7 @@ header.scrolled .nav-domain {
   flex-direction: column;
   justify-content: flex-end;
   position: relative;
-  background: #d9b8ad;
+  background: #1c1c1c;
 }
 
 #hero-canvas {
@@ -127,7 +115,7 @@ header.scrolled .nav-domain {
 }
 
 #hero .hero-name {
-  color: #1c1c1c;
+  color: #f0f0f0;
 }
 
 #hero .hero-bio {
@@ -144,7 +132,7 @@ header.scrolled .nav-domain {
 
 .hero-name {
   font-family: var(--font-sans);
-  font-size: clamp(5rem, 22vw, 22rem);
+  font-size: clamp(4rem, 16vw, 14rem);
   font-weight: 700;
   line-height: 0.9;
   letter-spacing: -0.03em;
