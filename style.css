@@ -95,6 +95,15 @@ nav {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  background: #d9b8ad;
+}
+
+#hero .hero-name {
+  color: #1c1c1c;
+}
+
+#hero .hero-bio {
+  color: #666;
 }
 
 .hero-layout {
