@@ -79,6 +79,16 @@
   margin-bottom: 0;
 }
 
+.article-credit {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.78rem;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 @media (max-width: 768px) {
   .article-page {
     padding: 7rem var(--pad) 5rem;

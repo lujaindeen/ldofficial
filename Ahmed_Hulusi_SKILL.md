@@ -177,10 +177,18 @@ articles/<slug>.md
 ```
 
 When creating the HTML version of the article, include a back link at the top of the
-`<article>` element, before the header:
+`<article>` element, before the header, and a credit block at the end of the article body:
 
 ```html
 <a href="../writing.html" class="article-back">← All articles</a>
+```
+
+At the end of the article body, after the last `</div>` closing the `article-body`:
+
+```html
+<div class="article-credit">
+  <span>Ahmed Hulusi</span>
+</div>
 ```
 
 After writing, confirm the file path to the user and note any manual steps needed
