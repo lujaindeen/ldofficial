@@ -52,12 +52,12 @@ nav {
   width: 100%;
 }
 
-.nav-back {
+.nav-home {
   font-size: 0.85rem;
   color: var(--muted);
   transition: color 0.2s;
 }
-.nav-back:hover { color: var(--text); }
+.nav-home:hover { color: var(--text); }
 
 .nav-download {
   font-size: 0.85rem;
