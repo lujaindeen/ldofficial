@@ -9,6 +9,8 @@ const fadeTargets = [
   '.hero-name',
   '.about-hello',
   '.detail-row',
+  '.writing-heading',
+  '.article-row',
   '.contact-heading',
   '.contact-link',
   '.footer-brand',
