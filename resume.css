@@ -1,0 +1,343 @@
+/* ===========================
+   VARIABLES & RESET
+   =========================== */
+:root {
+  --bg:      #1c1c1c;
+  --surface: #242424;
+  --text:    #f0f0f0;
+  --muted:   #a0a0a0;
+  --gold:    #d4a84a;
+  --border:  rgba(212, 168, 74, 0.15);
+
+  --font-sans:    'Space Grotesk', system-ui, sans-serif;
+  --font-display: 'UnifrakturCook', cursive;
+
+  --pad: clamp(1.5rem, 6vw, 6rem);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.7;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+
+
+/* ===========================
+   NAV
+   =========================== */
+header {
+  position: sticky;
+  top: 0;
+  background: rgba(28, 28, 28, 0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 1.25rem var(--pad);
+  z-index: 100;
+  display: flex;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.nav-back {
+  font-size: 0.85rem;
+  color: var(--muted);
+  transition: color 0.2s;
+}
+.nav-back:hover { color: var(--text); }
+
+.nav-download {
+  font-size: 0.85rem;
+  color: var(--gold);
+  border: 1px solid var(--border);
+  padding: 0.4rem 1rem;
+  border-radius: 0.25rem;
+  transition: background 0.2s, color 0.2s;
+}
+.nav-download:hover {
+  background: var(--gold);
+  color: #1c1c1c;
+}
+
+
+/* ===========================
+   HERO
+   =========================== */
+.r-hero {
+  padding: 5rem var(--pad) 4rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.r-name {
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+.r-title {
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.25rem;
+}
+
+.r-contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  align-items: center;
+}
+
+.r-contact a:hover { color: var(--gold); }
+.r-dot { opacity: 0.4; }
+
+
+/* ===========================
+   BODY
+   =========================== */
+.r-body {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 var(--pad) 6rem;
+}
+
+.r-section {
+  padding-top: 4rem;
+  border-top: 1px solid var(--border);
+  margin-top: 4rem;
+}
+
+.r-section:first-child {
+  margin-top: 0;
+  border-top: none;
+}
+
+.r-section-title {
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 2rem;
+  opacity: 0.7;
+}
+
+.r-summary {
+  font-size: 0.95rem;
+  line-height: 1.85;
+  color: var(--muted);
+  max-width: 720px;
+}
+
+
+/* ===========================
+   TIMELINE
+   =========================== */
+.r-timeline { display: flex; flex-direction: column; gap: 3rem; }
+
+.r-timeline-item {
+  padding-left: 1.5rem;
+  border-left: 1px solid var(--border);
+  position: relative;
+}
+
+.r-timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -4px;
+  top: 6px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+.r-timeline-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.35rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.r-company {
+  font-size: 0.8rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+.r-period {
+  font-size: 0.75rem;
+  color: var(--gold);
+  opacity: 0.7;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.06em;
+}
+
+.r-role {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 1.25rem;
+}
+
+.r-bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.r-bullets li {
+  font-size: 0.88rem;
+  line-height: 1.75;
+  color: var(--muted);
+  padding-left: 1rem;
+  position: relative;
+}
+
+.r-bullets li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+  opacity: 0.5;
+}
+
+
+/* ===========================
+   TWO COLUMN
+   =========================== */
+.r-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+}
+
+.r-two-col .r-section {
+  margin-top: 4rem;
+}
+
+
+/* ===========================
+   SKILLS
+   =========================== */
+.r-skills {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.r-skills li {
+  font-size: 0.88rem;
+  color: var(--text);
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.r-skills li:first-child { border-top: 1px solid var(--border); }
+
+
+/* ===========================
+   EDUCATION
+   =========================== */
+.r-edu-item {
+  margin-bottom: 1.75rem;
+}
+
+.r-edu-title {
+  display: block;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 0.2rem;
+}
+
+.r-edu-year {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--gold);
+  opacity: 0.7;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.3rem;
+}
+
+.r-edu-desc {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+
+/* ===========================
+   FOOTER
+   =========================== */
+.r-footer {
+  border-top: 1px solid var(--border);
+  padding: 3rem var(--pad);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.r-footer-brand {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--text);
+  opacity: 0.6;
+}
+
+.r-footer-download {
+  font-size: 0.82rem;
+  color: var(--gold);
+  border: 1px solid var(--border);
+  padding: 0.4rem 1rem;
+  border-radius: 0.25rem;
+  transition: background 0.2s, color 0.2s;
+}
+.r-footer-download:hover {
+  background: var(--gold);
+  color: #1c1c1c;
+}
+
+
+/* ===========================
+   RESPONSIVE
+   =========================== */
+@media (max-width: 768px) {
+  .r-two-col {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .r-timeline-meta {
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .r-footer {
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: center;
+  }
+}
