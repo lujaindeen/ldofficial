@@ -176,6 +176,13 @@ Save the article to the portfolio project's articles directory.
 articles/<slug>.md
 ```
 
+When creating the HTML version of the article, include a back link at the top of the
+`<article>` element, before the header:
+
+```html
+<a href="../writing.html" class="article-back">← All articles</a>
+```
+
 After writing, confirm the file path to the user and note any manual steps needed
 (e.g. restarting a dev server, committing to git).
 

@@ -8,6 +8,19 @@
   padding: 9rem var(--pad) 8rem;
 }
 
+.article-back {
+  display: inline-block;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  margin-bottom: 2.5rem;
+  transition: color 0.2s;
+}
+
+.article-back:hover {
+  color: var(--text);
+}
+
 .article-page-header {
   margin-bottom: 3.5rem;
   padding-bottom: 2.5rem;
