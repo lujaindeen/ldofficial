@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+# Environment & secrets — NEVER commit these
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+credentials/
+
+# Screenshots & temp files
+temporary screenshots/
+*.tmp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Raw video/caption downloads
+*.vtt
+*.srv3
+*.mp4
+*.MOV
+cleaned.txt
