@@ -2,11 +2,11 @@
    VARIABLES & RESET
    =========================== */
 :root {
-  --bg:       #1c1c1c;
-  --text:     #f0f0f0;
-  --muted:    #a0a0a0;
+  --bg:       #12100e;
+  --text:     #f5ede0;
+  --muted:    #b0a090;
   --green:    #39ff14;
-  --border:   rgba(240, 240, 240, 0.1);
+  --border:   rgba(212, 168, 74, 0.2);
 
   --font-sans:    'Space Grotesk', system-ui, sans-serif;
   --font-display: 'UnifrakturCook', cursive;
@@ -52,7 +52,7 @@ header {
 }
 
 header.scrolled {
-  background: rgba(28, 28, 28, 0.92);
+  background: rgba(18, 16, 14, 0.92);
   backdrop-filter: blur(12px);
 }
 
@@ -116,7 +116,7 @@ nav {
   flex-direction: column;
   justify-content: flex-end;
   position: relative;
-  background: #1c1c1c;
+  background: #12100e;
 }
 
 #hero-canvas {
@@ -144,11 +144,16 @@ nav {
 }
 
 #hero .hero-name {
-  color: #f0f0f0;
+  color: #f5ede0;
 }
 
-#hero .hero-bio {
-  color: #666;
+.hero-role {
+  font-size: 0.85rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 1.25rem;
+  font-weight: 400;
 }
 
 .hero-layout {

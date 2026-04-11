@@ -7,9 +7,9 @@ window.addEventListener('scroll', () => {
 // Fade-in on scroll
 const fadeTargets = [
   '.hero-name',
+  '.hero-role',
   '.about-hello',
   '.detail-row',
-'.contact-heading',
   '.contact-link',
   '.footer-brand',
 ];
@@ -105,8 +105,8 @@ document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
       space.x += random(space.y * warpFrequency + iTime * warpSpeed + 2.0) * warpAmplitude * horizontalFade;
 
       float lineTotal = 0.0;
-      vec4 bgColor1 = vec4(0.11, 0.11, 0.11, 1.0);
-      vec4 bgColor2 = vec4(0.08, 0.08, 0.08, 1.0);
+      vec4 bgColor1 = vec4(0.071, 0.063, 0.055, 1.0);
+      vec4 bgColor2 = vec4(0.055, 0.047, 0.039, 1.0);
 
       for(int l = 0; l < linesPerGroup; l++) {
         float normalizedLineIndex = float(l) / float(linesPerGroup);

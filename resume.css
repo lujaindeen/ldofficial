@@ -2,12 +2,12 @@
    VARIABLES & RESET
    =========================== */
 :root {
-  --bg:      #1c1c1c;
-  --surface: #242424;
-  --text:    #f0f0f0;
-  --muted:   #a0a0a0;
+  --bg:      #12100e;
+  --surface: #1c1916;
+  --text:    #f5ede0;
+  --muted:   #b0a090;
   --gold:    #d4a84a;
-  --border:  rgba(212, 168, 74, 0.15);
+  --border:  rgba(212, 168, 74, 0.2);
 
   --font-sans:    'Space Grotesk', system-ui, sans-serif;
   --font-display: 'UnifrakturCook', cursive;

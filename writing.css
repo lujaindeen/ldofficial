@@ -113,6 +113,11 @@
   width: 100% !important;
 }
 
+/* Smaller footer on articles page */
+footer .footer-brand {
+  font-size: clamp(2rem, 6vw, 4rem);
+}
+
 @media (max-width: 768px) {
   .writing-page {
     padding: 7rem var(--pad) 5rem;
