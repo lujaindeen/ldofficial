@@ -115,15 +115,17 @@ WHAT TO REMOVE:
 - Any content that does not help the reader understand the central idea
 
 STRICT RULES:
-1. Write in clear, readable English prose — continuous paragraphs, no bullet points, no dashes.
-2. Do not begin any sentence or paragraph with a dash (–, —, or -).
-3. Sufi and Islamic terms (e.g. "nefs", "ruh", "tevekkül", "zikir", "fenafillah") should be
-   transliterated the first time they appear, followed by a brief parenthetical gloss in
-   plain English — e.g. nefs (the ego-self). After the first occurrence, use the transliterated
+1. Write in plain, everyday English. Use short sentences. Avoid academic or technical phrasing
+   unless the concept genuinely requires it — and if it does, explain it immediately in simple terms.
+2. Write as continuous paragraphs — no bullet points, no dashes, no lists.
+3. Do not begin any sentence or paragraph with a dash (–, —, or -).
+4. Sufi and Islamic terms (e.g. "nefs", "ruh", "tevekkül", "zikir", "fenafillah") should be
+   transliterated the first time they appear, followed by a plain English explanation in
+   parentheses — e.g. nefs (the ego-self). After the first occurrence, use the transliterated
    term only.
-4. Scientific and technical terms should be translated into standard English equivalents.
-5. Do not add your own ideas, commentary, or interpretation — only what the speaker argues.
-6. The finished article should be concise enough that a reader can absorb it in 3–5 minutes.
+5. Scientific and technical terms should be translated into everyday equivalents wherever possible.
+6. Do not add your own ideas, commentary, or interpretation — only what the speaker argues.
+7. The finished article should be concise enough that a reader can absorb it in 3–5 minutes.
 
 Return only the article text. No preamble, no sign-off.
 ```
