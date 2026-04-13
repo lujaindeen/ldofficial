@@ -361,6 +361,113 @@ nav {
 
 
 /* ===========================
+   PROJECTS
+   =========================== */
+#projects {
+  padding: 6rem var(--pad) 7rem;
+  border-top: 1px solid var(--border);
+}
+
+.projects-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: start;
+}
+
+.projects-heading {
+  font-family: var(--font-sans);
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  line-height: 0.95;
+}
+
+.projects-sub {
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-top: 1.25rem;
+  max-width: 280px;
+}
+
+.projects-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.project-row {
+  display: block;
+  padding: 1.6rem 0;
+  border-bottom: 1px solid var(--border);
+  transition: padding-left 0.2s;
+  text-decoration: none;
+}
+
+.project-row:first-child { border-top: 1px solid var(--border); }
+
+.project-row:hover { padding-left: 0.5rem; }
+
+.project-row-main {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.project-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.project-name {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  transition: color 0.2s;
+}
+
+.project-row:hover .project-name { color: #d4a84a; }
+
+.project-desc {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 520px;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.25rem;
+}
+
+.project-tag {
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #d4a84a;
+  background: rgba(212, 168, 74, 0.08);
+  padding: 0.2rem 0.55rem;
+  border-radius: 2px;
+}
+
+.project-arrow {
+  opacity: 0.4;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+  transition: opacity 0.2s;
+  padding-top: 0.1rem;
+}
+
+.project-row:hover .project-arrow { opacity: 0.8; }
+
+
+/* ===========================
    CONTACT
    =========================== */
 #contact {

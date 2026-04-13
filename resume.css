@@ -224,6 +224,20 @@ nav {
 }
 
 
+.r-project-link {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.r-project-link:hover { opacity: 1; }
+
+
 /* ===========================
    TWO COLUMN
    =========================== */

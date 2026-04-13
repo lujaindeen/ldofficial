@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Starlube — Report Generator</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<style>
+  :root {
+    --bg: #F5F3EF;
+    --surface: #FFFFFF;
+    --border: #E0DDD8;
+    --text: #1A1A1A;
+    --muted: #888880;
+    --accent: #2C5F8A;
+    --accent-light: #EBF2F8;
+    --danger: #8B2E2E;
+    --success: #2E6B42;
+    --mono: 'DM Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* TOP BAR */
+  header {
+    background: var(--text);
+    color: white;
+    padding: 18px 32px;
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+  }
+  header h1 { font-size: 18px; font-weight: 600; letter-spacing: 0.08em; }
+  header span { font-family: var(--mono); font-size: 11px; color: #888; letter-spacing: 0.05em; }
+
+  /* LAYOUT */
+  .container { max-width: 820px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  /* REPORT TYPE PICKER */
+  .type-label { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 12px; }
+
+  .type-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 36px; }
+
+  .type-btn {
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    border-radius: 8px;
+    padding: 16px 14px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.15s;
+  }
+  .type-btn:hover { border-color: var(--accent); background: var(--accent-light); }
+  .type-btn.active { border-color: var(--accent); background: var(--accent-light); }
+  .type-btn .icon { font-size: 22px; margin-bottom: 8px; display: block; }
+  .type-btn .name { font-size: 13px; font-weight: 600; color: var(--text); display: block; }
+  .type-btn .desc { font-size: 11px; color: var(--muted); margin-top: 2px; display: block; }
+
+  /* FORM PANELS */
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* SECTION HEADING */
+  .section-head {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 18px; margin-top: 32px;
+  }
+  .section-head h2 { font-size: 13px; font-weight: 600; letter-spacing: 0.04em; }
+  .section-head .pill {
+    font-family: var(--mono); font-size: 10px; color: var(--muted);
+    background: var(--border); border-radius: 100px; padding: 2px 8px;
+  }
+
+  /* FIELDS */
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  .field-row.trio { grid-template-columns: 1fr 1fr 1fr; }
+  .field-row.solo { grid-template-columns: 1fr; }
+
+  .field { display: flex; flex-direction: column; gap: 5px; }
+  .field label { font-size: 11px; font-weight: 500; color: var(--muted); letter-spacing: 0.04em; }
+  .field input, .field select {
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    padding: 9px 12px;
+    font-family: var(--sans);
+    font-size: 14px;
+    color: var(--text);
+    background: var(--surface);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .field input:focus, .field select:focus { border-color: var(--accent); }
+  .field input[type="date"] { font-family: var(--mono); font-size: 13px; }
+
+  /* JOB ROWS */
+  .jobs-list { display: flex; flex-direction: column; gap: 10px; }
+
+  .job-row {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    position: relative;
+  }
+  .job-row .job-grid { display: grid; grid-template-columns: 110px 1fr 1fr; gap: 10px; align-items: end; }
+  .job-row .job-grid-5 { display: grid; grid-template-columns: 110px 1fr 1fr 90px 90px; gap: 10px; align-items: end; }
+  .job-row .remove-btn {
+    position: absolute; top: 10px; right: 12px;
+    background: none; border: none; cursor: pointer;
+    color: var(--muted); font-size: 16px; line-height: 1;
+    padding: 2px 4px; border-radius: 4px;
+  }
+  .job-row .remove-btn:hover { color: var(--danger); background: #fdf0f0; }
+
+  .add-btn {
+    border: 1.5px dashed var(--border);
+    background: transparent;
+    border-radius: 8px;
+    padding: 10px;
+    width: 100%;
+    cursor: pointer;
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--muted);
+    transition: all 0.15s;
+    margin-top: 4px;
+  }
+  .add-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+
+  /* GENERATE BTN */
+  .generate-wrap { margin-top: 36px; text-align: center; }
+  .generate-btn {
+    background: var(--text);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 15px 48px;
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+    transition: all 0.15s;
+  }
+  .generate-btn:hover { background: var(--accent); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(44,95,138,0.25); }
+  .generate-btn:active { transform: translateY(0); }
+
+  /* TOAST */
+  .toast {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(80px);
+    background: var(--text); color: white;
+    padding: 12px 24px; border-radius: 8px;
+    font-size: 13px; font-weight: 500;
+    opacity: 0; transition: all 0.3s;
+    pointer-events: none; white-space: nowrap;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* EXPENSE-SPECIFIC */
+  .balance-row { background: var(--accent-light); border: 1.5px solid #c5d9ec; border-radius: 8px; padding: 14px 16px; margin-bottom: 20px; }
+
+  @media (max-width: 600px) {
+    .type-grid { grid-template-columns: 1fr; }
+    .field-row { grid-template-columns: 1fr; }
+    .field-row.trio { grid-template-columns: 1fr 1fr; }
+    .job-row .job-grid { grid-template-columns: 1fr 1fr; }
+    .job-row .job-grid-5 { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>STARLUBE</h1>
+  <span>Report Generator</span>
+</header>
+
+<div class="container">
+
+  <div class="type-label">Select Report Type</div>
+  <div class="type-grid">
+    <button class="type-btn active" onclick="switchType('expense')">
+      <span class="icon">📊</span>
+      <span class="name">Weekly Expense</span>
+      <span class="desc">Income & expense tracking</span>
+    </button>
+    <button class="type-btn" onclick="switchType('boby')">
+      <span class="icon">🔧</span>
+      <span class="name">Boby's Jobs</span>
+      <span class="desc">50/50 mechanic split</span>
+    </button>
+    <button class="type-btn" onclick="switchType('joy')">
+      <span class="icon">🔩</span>
+      <span class="name">Joy's Jobs</span>
+      <span class="desc">50% Starlube share</span>
+    </button>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- PANEL 1: WEEKLY EXPENSE REPORT                  -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="panel active" id="panel-expense">
+
+    <div class="section-head">
+      <h2>Report Period</h2>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>WEEK STARTING</label>
+        <input type="date" id="exp-start">
+      </div>
+      <div class="field">
+        <label>WEEK ENDING</label>
+        <input type="date" id="exp-end">
+      </div>
+    </div>
+
+    <div class="balance-row">
+      <div class="field">
+        <label>OPENING BALANCE (CA$)</label>
+        <input type="number" id="exp-balance" placeholder="e.g. 2571.38" step="0.01" min="0">
+      </div>
+    </div>
+
+    <div class="section-head">
+      <h2>Income Entries</h2>
+      <span class="pill">add each transaction</span>
+    </div>
+    <div class="jobs-list" id="income-list"></div>
+    <button class="add-btn" onclick="addRow('income')">+ Add Income Entry</button>
+
+    <div class="section-head">
+      <h2>Expense Entries</h2>
+      <span class="pill">add each transaction</span>
+    </div>
+    <div class="jobs-list" id="expense-list"></div>
+    <button class="add-btn" onclick="addRow('expense')">+ Add Expense Entry</button>
+
+    <div class="generate-wrap">
+      <button class="generate-btn" onclick="generateExpensePDF()">⬇ Download PDF Report</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- PANEL 2: BOBY JOBS                              -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="panel" id="panel-boby">
+
+    <div class="section-head">
+      <h2>Report Period</h2>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>PERIOD START</label>
+        <input type="date" id="boby-start">
+      </div>
+      <div class="field">
+        <label>PERIOD END</label>
+        <input type="date" id="boby-end">
+      </div>
+    </div>
+
+    <div class="section-head">
+      <h2>Jobs</h2>
+      <span class="pill">labour is split 50 / 50</span>
+    </div>
+    <div class="jobs-list" id="boby-list"></div>
+    <button class="add-btn" onclick="addRow('boby')">+ Add Job</button>
+
+    <div class="generate-wrap">
+      <button class="generate-btn" onclick="generateMechanicPDF('boby')">⬇ Download PDF Report</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- PANEL 3: JOY JOBS                               -->
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="panel" id="panel-joy">
+
+    <div class="section-head">
+      <h2>Report Period</h2>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>PERIOD START</label>
+        <input type="date" id="joy-start">
+      </div>
+      <div class="field">
+        <label>PERIOD END</label>
+        <input type="date" id="joy-end">
+      </div>
+    </div>
+
+    <div class="section-head">
+      <h2>Jobs</h2>
+      <span class="pill">starlube receives 50%</span>
+    </div>
+    <div class="jobs-list" id="joy-list"></div>
+    <button class="add-btn" onclick="addRow('joy')">+ Add Job</button>
+
+    <div class="generate-wrap">
+      <button class="generate-btn" onclick="generateMechanicPDF('joy')">⬇ Download PDF Report</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast">✓ PDF downloaded successfully</div>
+
+<script>
+// ── State ────────────────────────────────────────────────────────
+let counters = { income: 0, expense: 0, boby: 0, joy: 0 };
+
+// ── Tab switching ────────────────────────────────────────────────
+function switchType(type) {
+  document.querySelectorAll('.type-btn').forEach((b,i) => {
+    b.classList.toggle('active', ['expense','boby','joy'][i] === type);
+  });
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + type).classList.add('active');
+}
+
+// ── Add row ──────────────────────────────────────────────────────
+function addRow(type) {
+  const id = ++counters[type];
+  const list = document.getElementById(type + '-list');
+  const div = document.createElement('div');
+  div.className = 'job-row';
+  div.id = type + '-row-' + id;
+
+  if (type === 'income' || type === 'expense') {
+    div.innerHTML = `
+      <button class="remove-btn" onclick="removeRow('${type}',${id})">✕</button>
+      <div class="job-grid">
+        <div class="field"><label>DATE</label><input type="date" id="${type}-date-${id}"></div>
+        <div class="field"><label>DESCRIPTION</label><input type="text" placeholder="e.g. Cash receipt" id="${type}-desc-${id}"></div>
+        <div class="field"><label>AMOUNT (CA$)</label><input type="number" placeholder="0.00" step="0.01" min="0" id="${type}-amt-${id}"></div>
+      </div>`;
+  } else {
+    // boby or joy — 5-column job row
+    const mechName = type === 'boby' ? 'Boby' : 'Joy';
+    div.innerHTML = `
+      <button class="remove-btn" onclick="removeRow('${type}',${id})">✕</button>
+      <div class="job-grid-5">
+        <div class="field"><label>DATE</label><input type="date" id="${type}-date-${id}"></div>
+        <div class="field"><label>VEHICLE</label><input type="text" placeholder="e.g. Toyota Corolla 2019" id="${type}-vehicle-${id}"></div>
+        <div class="field"><label>JOB DESCRIPTION</label><input type="text" placeholder="e.g. Oil change" id="${type}-job-${id}"></div>
+        <div class="field"><label>LABOUR (CA$)</label><input type="number" placeholder="0.00" step="0.01" min="0" id="${type}-labour-${id}" oninput="autoSplit('${type}',${id})"></div>
+        <div class="field"><label>${mechName} GETS (CA$)</label><input type="number" placeholder="auto" step="0.01" min="0" id="${type}-mech-${id}"></div>
+      </div>`;
+  }
+
+  list.appendChild(div);
+}
+
+function removeRow(type, id) {
+  const el = document.getElementById(type + '-row-' + id);
+  if (el) el.remove();
+}
+
+function autoSplit(type, id) {
+  const labour = parseFloat(document.getElementById(type + '-labour-' + id).value) || 0;
+  document.getElementById(type + '-mech-' + id).value = (labour / 2).toFixed(2);
+}
+
+// ── Helpers ──────────────────────────────────────────────────────
+function fmt(n) { return 'CA$ ' + parseFloat(n || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+function fmtDate(d) { if (!d) return '—'; const [y,m,day] = d.split('-'); return `${y}/${m}/${day}`; }
+
+function collectRows(type, fields) {
+  const rows = [];
+  document.querySelectorAll(`[id^="${type}-row-"]`).forEach(row => {
+    const id = row.id.split('-').pop();
+    const obj = {};
+    fields.forEach(f => {
+      const el = document.getElementById(`${type}-${f}-${id}`);
+      obj[f] = el ? el.value : '';
+    });
+    rows.push(obj);
+  });
+  return rows;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ── PDF shared helpers ───────────────────────────────────────────
+function pdfHeader(doc, title, subtitle, period) {
+  const W = doc.internal.pageSize.getWidth();
+  // Company name
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(22);
+  doc.setTextColor(26,26,26);
+  doc.text('STARLUBE', 22, 22);
+  // Subtitle
+  doc.setFont('helvetica','normal');
+  doc.setFontSize(10);
+  doc.setTextColor(100,100,100);
+  doc.text(title, 22, 30);
+  // Rule
+  doc.setDrawColor(44,95,138);
+  doc.setLineWidth(0.6);
+  doc.line(22, 34, W - 22, 34);
+  // Period
+  doc.setFontSize(8);
+  doc.setTextColor(130,130,130);
+  doc.text(period, 22, 39);
+  if (subtitle) {
+    doc.setFont('helvetica','italic');
+    doc.text(subtitle, 22, 44);
+  }
+}
+
+function pdfSectionLabel(doc, text, y) {
+  doc.setFont('helvetica','bold');
+  doc.setFontSize(9);
+  doc.setTextColor(44,95,138);
+  doc.text(text, 22, y);
+}
+
+function pdfSummaryCards(doc, cards, y) {
+  const W = doc.internal.pageSize.getWidth();
+  const cardW = (W - 44) / cards.length;
+  cards.forEach((c, i) => {
+    const x = 22 + i * cardW;
+    doc.setFont('helvetica','normal');
+    doc.setFontSize(7);
+    doc.setTextColor(130,130,130);
+    doc.text(c.label, x, y);
+    doc.setFont('helvetica','bold');
+    doc.setFontSize(13);
+    doc.setTextColor(26,26,26);
+    doc.text(c.value, x, y + 7);
+    // underline
+    const color = c.color || [44,95,138];
+    doc.setDrawColor(...color);
+    doc.setLineWidth(0.8);
+    doc.line(x, y + 9, x + cardW - 8, y + 9);
+  });
+}
+
+function pdfFooter(doc) {
+  const W = doc.internal.pageSize.getWidth();
+  const H = doc.internal.pageSize.getHeight();
+  doc.setDrawColor(200,200,200);
+  doc.setLineWidth(0.3);
+  doc.line(22, H - 16, W - 22, H - 16);
+  doc.setFont('helvetica','normal');
+  doc.setFontSize(7);
+  doc.setTextColor(180,180,180);
+  doc.text('STARLUBE  ·  Confidential  ·  All amounts in Canadian Dollars (CAD)', W / 2, H - 10, { align: 'center' });
+}
+
+function pdfNetSummary(doc, rows, y) {
+  const W = doc.internal.pageSize.getWidth();
+  rows.forEach((r, i) => {
+    const isLast = i === rows.length - 1;
+    doc.setFont('helvetica', isLast ? 'bold' : 'normal');
+    doc.setFontSize(isLast ? 10 : 9);
+    doc.setTextColor(isLast ? 26 : 100, isLast ? 26 : 100, isLast ? 26 : 100);
+    doc.text(r.label, W - 22 - 42, y, { align: 'right' });
+    doc.setTextColor(isLast ? 44 : 80, isLast ? 95 : 80, isLast ? 138 : 80);
+    doc.text(r.value, W - 22, y, { align: 'right' });
+    y += 6;
+    if (isLast) {
+      doc.setDrawColor(50,50,50);
+      doc.setLineWidth(0.5);
+      doc.line(W - 22 - 72, y - 4.5, W - 22, y - 4.5);
+    }
+  });
+  return y;
+}
+
+// ── EXPENSE PDF ──────────────────────────────────────────────────
+function generateExpensePDF() {
+  const start   = fmtDate(document.getElementById('exp-start').value);
+  const end     = fmtDate(document.getElementById('exp-end').value);
+  const balance = parseFloat(document.getElementById('exp-balance').value) || 0;
+
+  const incRows = collectRows('income', ['date','desc','amt']);
+  const expRows = collectRows('expense', ['date','desc','amt']);
+
+  const totalInc = incRows.reduce((s,r) => s + (parseFloat(r.amt)||0), 0);
+  const totalExp = expRows.reduce((s,r) => s + (parseFloat(r.amt)||0), 0);
+  const net = totalInc - totalExp;
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+
+  pdfHeader(doc,
+    'Weekly Expense Report & Income Statement',
+    null,
+    `Period: ${start} – ${end}   |   Generated: ${new Date().toISOString().slice(0,10)}`
+  );
+
+  pdfSummaryCards(doc, [
+    { label: 'OPENING BALANCE', value: fmt(balance), color: [44,95,138] },
+    { label: 'TOTAL INCOME',    value: fmt(totalInc), color: [46,107,66] },
+    { label: 'TOTAL EXPENSES',  value: fmt(totalExp), color: [139,46,46] },
+  ], 54);
+
+  let y = 72;
+
+  // Income table
+  pdfSectionLabel(doc, 'INCOME', y); y += 4;
+  doc.autoTable({
+    startY: y,
+    head: [['DATE','DESCRIPTION','AMOUNT (CAD)']],
+    body: [
+      ...incRows.map(r => [fmtDate(r.date), r.desc || '—', fmt(r.amt)]),
+      [{ content: 'Total Income', colSpan: 2, styles: { fontStyle:'bold', halign:'right' } }, { content: fmt(totalInc), styles: { fontStyle:'bold', textColor:[46,107,66] } }]
+    ],
+    theme: 'plain',
+    styles: { font:'helvetica', fontSize:9, cellPadding:{top:4,bottom:4,left:7,right:7} },
+    headStyles: { fillColor:[51,51,51], textColor:255, fontSize:8 },
+    columnStyles: { 0:{cellWidth:30}, 2:{halign:'right', cellWidth:35} },
+    alternateRowStyles: { fillColor:[240,240,240] },
+    margin: { left:22, right:22 },
+  });
+
+  y = doc.lastAutoTable.finalY + 10;
+  pdfSectionLabel(doc, 'EXPENSES', y); y += 4;
+  doc.autoTable({
+    startY: y,
+    head: [['DATE','DESCRIPTION','AMOUNT (CAD)']],
+    body: [
+      ...expRows.map(r => [fmtDate(r.date), r.desc || '—', fmt(r.amt)]),
+      [{ content: 'Total Expenses', colSpan: 2, styles: { fontStyle:'bold', halign:'right' } }, { content: fmt(totalExp), styles: { fontStyle:'bold', textColor:[139,46,46] } }]
+    ],
+    theme: 'plain',
+    styles: { font:'helvetica', fontSize:9, cellPadding:{top:4,bottom:4,left:7,right:7} },
+    headStyles: { fillColor:[51,51,51], textColor:255, fontSize:8 },
+    columnStyles: { 0:{cellWidth:30}, 2:{halign:'right', cellWidth:35} },
+    alternateRowStyles: { fillColor:[240,240,240] },
+    margin: { left:22, right:22 },
+  });
+
+  y = doc.lastAutoTable.finalY + 10;
+  doc.setDrawColor(200,200,200); doc.setLineWidth(0.3);
+  doc.line(22, y, doc.internal.pageSize.getWidth()-22, y);
+  y += 8;
+
+  pdfNetSummary(doc, [
+    { label: 'Opening Balance',  value: fmt(balance) },
+    { label: '+ Total Income',   value: fmt(totalInc) },
+    { label: '− Total Expenses', value: fmt(totalExp) },
+    { label: 'Net Balance',      value: fmt(net) },
+  ], y);
+
+  pdfFooter(doc);
+  doc.save(`Starlube_Weekly_Expense_${start.replace(/\//g,'-')}.pdf`);
+  showToast('✓ PDF downloaded!');
+}
+
+// ── MECHANIC PDF (Boby / Joy) ─────────────────────────────────────
+function generateMechanicPDF(type) {
+  const mechName = type === 'boby' ? 'Boby' : 'Joy (Guyanese)';
+  const start = fmtDate(document.getElementById(type + '-start').value);
+  const end   = fmtDate(document.getElementById(type + '-end').value);
+
+  const jobs = collectRows(type, ['date','vehicle','job','labour','mech']);
+
+  const totalLabour = jobs.reduce((s,r) => s + (parseFloat(r.labour)||0), 0);
+  const totalMech   = jobs.reduce((s,r) => s + (parseFloat(r.mech)||0), 0);
+  const totalStar   = totalLabour - totalMech;
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+
+  pdfHeader(doc,
+    `Mechanic Jobs & Income Report — ${mechName}`,
+    'Note: Labour split 50% mechanic / 50% Starlube on all jobs.',
+    `Period: ${start} – ${end}   |   Generated: ${new Date().toISOString().slice(0,10)}`
+  );
+
+  pdfSummaryCards(doc, [
+    { label: 'TOTAL LABOUR',             value: fmt(totalLabour), color:[50,50,50] },
+    { label: `${type==='boby'?'BOBY':'JOY'} EARNINGS`, value: fmt(totalMech), color:[50,50,50] },
+    { label: 'STARLUBE (50%)',            value: fmt(totalStar),  color:[44,95,138] },
+  ], 54);
+
+  let y = 72;
+  pdfSectionLabel(doc, 'JOB BREAKDOWN', y); y += 4;
+
+  const mechCol = type === 'boby' ? 'BOBY' : 'JOY';
+  doc.autoTable({
+    startY: y,
+    head: [['DATE','VEHICLE','JOB','LABOUR (CAD)', mechCol, 'STARLUBE']],
+    body: [
+      ...jobs.map(r => {
+        const lab = parseFloat(r.labour)||0;
+        const mch = parseFloat(r.mech)||0;
+        const star = lab - mch;
+        return [fmtDate(r.date), r.vehicle||'—', r.job||'—', fmt(lab), fmt(mch), fmt(star)];
+      }),
+      [
+        { content:'', colSpan:3, styles:{ fontStyle:'bold', halign:'right' } },
+        { content: fmt(totalLabour), styles:{ fontStyle:'bold' } },
+        { content: fmt(totalMech),   styles:{ fontStyle:'bold' } },
+        { content: fmt(totalStar),   styles:{ fontStyle:'bold', textColor:[44,95,138] } },
+      ]
+    ],
+    theme: 'plain',
+    styles: { font:'helvetica', fontSize:9, cellPadding:{top:4,bottom:4,left:6,right:6} },
+    headStyles: { fillColor:[51,51,51], textColor:255, fontSize:8 },
+    columnStyles: {
+      0:{cellWidth:26}, 3:{halign:'right',cellWidth:28},
+      4:{halign:'right',cellWidth:24}, 5:{halign:'right',cellWidth:28}
+    },
+    alternateRowStyles: { fillColor:[240,240,240] },
+    margin: { left:22, right:22 },
+  });
+
+  y = doc.lastAutoTable.finalY + 10;
+  doc.setDrawColor(200,200,200); doc.setLineWidth(0.3);
+  doc.line(22, y, doc.internal.pageSize.getWidth()-22, y);
+  y += 8;
+
+  pdfNetSummary(doc, [
+    { label: 'Total Jobs Completed',   value: String(jobs.length) },
+    { label: 'Total Labour Billed',    value: fmt(totalLabour) },
+    { label: `${type==='boby'?'Boby':'Joy'} Earnings`, value: fmt(totalMech) },
+    { label: 'Starlube Share (50%)',   value: fmt(totalStar) },
+  ], y);
+
+  pdfFooter(doc);
+  const safeName = type === 'boby' ? 'Boby' : 'Joy';
+  doc.save(`Starlube_${safeName}_Jobs_${start.replace(/\//g,'-')}.pdf`);
+  showToast('✓ PDF downloaded!');
+}
+
+// ── Pre-populate one row each so it doesn't look empty ───────────
+addRow('income');
+addRow('expense');
+addRow('boby');
+addRow('joy');
+</script>
+</body>
+</html>
