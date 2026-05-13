@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Being — Mental Health Companion App</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@1,400;1,500;1,600&family=JetBrains+Mono:ital,wght@1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:      #FFFFFF;
+      --ink:     #302D25;
+      --muted:   #7A7568;
+      --foliage: #3F6B4A;
+      --trunk:   #8B5A3C;
+      --soft:    #F7F5F2;
+      --border:  #E8E4DF;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      padding: 20px 40px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-back {
+      font-family: 'JetBrains Mono', monospace;
+      font-style: italic;
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--foliage); }
+    .nav-sep { color: var(--border); font-size: 14px; }
+    .nav-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 500;
+      font-size: 20px;
+      color: var(--ink);
+    }
+    .nav-badge {
+      margin-left: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-style: italic;
+      font-size: 10px;
+      color: var(--foliage);
+      background: rgba(63,107,74,0.08);
+      border: 1px solid rgba(63,107,74,0.2);
+      border-radius: 100px;
+      padding: 4px 12px;
+      letter-spacing: 0.08em;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 72px 40px 56px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Tree SVG */
+    .tree-wrap {
+      margin-bottom: 36px;
+    }
+
+    .hero-wordmark {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 52px;
+      color: var(--ink);
+      letter-spacing: 0.04em;
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .hero-tagline {
+      font-family: 'JetBrains Mono', monospace;
+      font-style: italic;
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      margin-bottom: 4px;
+    }
+    .hero-tagline.dim { opacity: 0.6; }
+
+    .hero-desc {
+      max-width: 520px;
+      margin: 28px auto 0;
+      font-size: 17px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--ink);
+    }
+
+    /* ── SECTIONS ── */
+    .section {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 64px 40px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section:last-child { border-bottom: none; }
+
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-style: italic;
+      font-size: 11px;
+      color: var(--foliage);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .section-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 34px;
+      font-weight: 500;
+      color: var(--ink);
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    .section-body {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--muted);
+      max-width: 600px;
+    }
+    .section-body strong {
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    /* ── FEATURE GRID ── */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      margin-top: 40px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .feature-card {
+      padding: 28px 28px;
+      background: var(--soft);
+      transition: background 0.2s;
+    }
+    .feature-card:hover { background: #f0ede8; }
+
+    .feature-icon {
+      width: 36px;
+      height: 36px;
+      margin-bottom: 14px;
+    }
+
+    .feature-name {
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+
+    .feature-desc {
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    /* ── TECH STACK ── */
+    .stack-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 32px;
+    }
+
+    .stack-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-style: italic;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: var(--ink);
+      background: var(--soft);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 7px 16px;
+    }
+
+    /* ── PHILOSOPHY QUOTE ── */
+    .quote-block {
+      border-left: 3px solid var(--foliage);
+      padding: 20px 28px;
+      margin: 40px 0;
+      background: rgba(63,107,74,0.04);
+      border-radius: 0 8px 8px 0;
+    }
+
+    .quote-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+
+    .quote-sub {
+      font-family: 'JetBrains Mono', monospace;
+      font-style: italic;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+
+    /* ── STATUS BANNER ── */
+    .status-banner {
+      background: var(--soft);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 40px;
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--foliage);
+      flex-shrink: 0;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.85); }
+    }
+
+    .status-text {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.5;
+    }
+    .status-text span {
+      font-weight: 600;
+      color: var(--foliage);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 40px;
+      font-family: 'JetBrains Mono', monospace;
+      font-style: italic;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+    footer a {
+      color: var(--foliage);
+      text-decoration: none;
+    }
+    footer a:hover { text-decoration: underline; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      nav { padding: 16px 20px; }
+      .hero { padding: 48px 24px 40px; }
+      .hero-wordmark { font-size: 40px; }
+      .section { padding: 48px 24px; }
+      .feature-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-back">← back</a>
+    <span class="nav-sep">/</span>
+    <span class="nav-title">Being</span>
+    <span class="nav-badge">in development</span>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="tree-wrap">
+      <svg width="120" height="150" viewBox="0 0 120 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Trunk -->
+        <polygon points="60,30 22,130 98,130" fill="#8B5A3C"/>
+        <!-- Top foliage -->
+        <polygon points="60,8 46,32 74,32" fill="#3F6B4A"/>
+        <!-- Row 1 leaves -->
+        <polygon points="30,62 18,80 42,80" fill="#3F6B4A"/>
+        <polygon points="90,62 78,80 102,80" fill="#3F6B4A"/>
+        <!-- Row 2 leaves -->
+        <polygon points="24,90 12,108 36,108" fill="#3F6B4A"/>
+        <polygon points="96,90 84,108 108,108" fill="#3F6B4A"/>
+        <!-- Row 3 leaves -->
+        <polygon points="18,112 6,130 30,130" fill="#3F6B4A"/>
+        <polygon points="102,112 90,130 114,130" fill="#3F6B4A"/>
+      </svg>
+    </div>
+
+    <h1 class="hero-wordmark">Being</h1>
+    <p class="hero-tagline">here. now.</p>
+    <p class="hero-tagline dim">when you're ready.</p>
+
+    <p class="hero-desc">
+      A mental health companion app for people who live on autopilot — stuck, overthinking, or carrying something heavy they haven't said out loud yet.
+    </p>
+  </div>
+
+  <!-- THE IDEA -->
+  <div class="section">
+    <div class="section-label">the idea</div>
+    <h2 class="section-heading">You don't need advice.<br>You need to feel heard.</h2>
+    <p class="section-body">
+      A lot of people struggle in silence — not because they don't want help, but because they don't feel safe asking for it. Most apps respond to that with checklists, journaling prompts, and streaks. Being does the opposite.
+    </p>
+    <div class="quote-block">
+      <p class="quote-text">"A tree simply <em>is</em>. It goes through every season, every storm, without trying to be anything other than itself."</p>
+      <p class="quote-sub">— the design brief behind Being</p>
+    </div>
+    <p class="section-body">
+      Being is a <strong>quiet presence</strong>. It asks nothing of you when you open it. It waits. When you're ready, it listens — and reflects back what it hears without judgment, advice, or hollow affirmations.
+    </p>
+  </div>
+
+  <!-- FEATURES -->
+  <div class="section">
+    <div class="section-label">what it does</div>
+    <h2 class="section-heading">Built around presence,<br>not productivity.</h2>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <svg class="feature-icon" viewBox="0 0 36 36" fill="none">
+          <circle cx="18" cy="18" r="14" stroke="#3F6B4A" stroke-width="1.5"/>
+          <circle cx="18" cy="18" r="7" fill="#3F6B4A" opacity="0.2"/>
+          <circle cx="18" cy="18" r="4" fill="#3F6B4A"/>
+        </svg>
+        <div class="feature-name">Voice-first conversation</div>
+        <div class="feature-desc">Speak naturally. Being listens using OpenAI Whisper, transcribes what you said, and responds — both in text and voice — with a warm, human tone.</div>
+      </div>
+
+      <div class="feature-card">
+        <svg class="feature-icon" viewBox="0 0 36 36" fill="none">
+          <rect x="8" y="10" width="20" height="16" rx="3" stroke="#3F6B4A" stroke-width="1.5"/>
+          <path d="M13 16h10M13 20h6" stroke="#3F6B4A" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <div class="feature-name">AI that listens, not lectures</div>
+        <div class="feature-desc">Powered by Claude (Haiku). Responses are 2–4 sentences max. Always lowercase. No advice unless you ask. No "I hear you." Just honest, gentle presence.</div>
+      </div>
+
+      <div class="feature-card">
+        <svg class="feature-icon" viewBox="0 0 36 36" fill="none">
+          <path d="M10 26 L18 8 L26 26" stroke="#8B5A3C" stroke-width="1.5" stroke-linejoin="round"/>
+          <path d="M6 20 L12 8 L18 20" stroke="#3F6B4A" stroke-width="1.2" stroke-linejoin="round" opacity="0.6"/>
+          <path d="M18 20 L24 8 L30 20" stroke="#3F6B4A" stroke-width="1.2" stroke-linejoin="round" opacity="0.6"/>
+        </svg>
+        <div class="feature-name">The Being Tree</div>
+        <div class="feature-desc">A tree made of triangles lives at the heart of the app. Slowly animated. Quietly present. A symbol of something that simply exists, season after season.</div>
+      </div>
+
+      <div class="feature-card">
+        <svg class="feature-icon" viewBox="0 0 36 36" fill="none">
+          <path d="M18 8 Q26 14 26 22 Q26 28 18 30 Q10 28 10 22 Q10 14 18 8Z" stroke="#3F6B4A" stroke-width="1.5" fill="none"/>
+          <path d="M14 18 Q16 22 18 18 Q20 14 22 18" stroke="#3F6B4A" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+        </svg>
+        <div class="feature-name">Live voice waveform</div>
+        <div class="feature-desc">When you speak, animated bars pulse with your voice level — a subtle visual cue that Being is genuinely listening to every word.</div>
+      </div>
+
+      <div class="feature-card">
+        <svg class="feature-icon" viewBox="0 0 36 36" fill="none">
+          <rect x="8" y="8" width="20" height="20" rx="4" stroke="#3F6B4A" stroke-width="1.5"/>
+          <path d="M12 18h12M18 12v12" stroke="#3F6B4A" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+          <circle cx="18" cy="18" r="3" fill="#3F6B4A"/>
+        </svg>
+        <div class="feature-name">Private by design</div>
+        <div class="feature-desc">Everything is stored locally on your device via AsyncStorage. No accounts. No cloud sync. Your conversations belong to you, and only you.</div>
+      </div>
+
+      <div class="feature-card">
+        <svg class="feature-icon" viewBox="0 0 36 36" fill="none">
+          <path d="M10 28 C10 20 16 14 18 10 C20 14 26 20 26 28" stroke="#3F6B4A" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+          <path d="M13 22 C15 18 21 18 23 22" stroke="#3F6B4A" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.5"/>
+        </svg>
+        <div class="feature-name">Gentle check-ins</div>
+        <div class="feature-desc">After a period of silence, Being quietly checks in — "hey, you still around?" — without pressure, without urgency. Just making sure you know it's there.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TECH STACK -->
+  <div class="section">
+    <div class="section-label">built with</div>
+    <h2 class="section-heading">The stack behind it.</h2>
+    <p class="section-body">
+      Built entirely with <strong>Claude Code</strong> as the development environment — from architecture decisions to every line of UI. The AI tools aren't just used in the app; they were used to build it.
+    </p>
+    <div class="stack-grid">
+      <span class="stack-tag">React Native</span>
+      <span class="stack-tag">Expo SDK 54</span>
+      <span class="stack-tag">TypeScript</span>
+      <span class="stack-tag">Claude Haiku (AI)</span>
+      <span class="stack-tag">OpenAI Whisper (STT)</span>
+      <span class="stack-tag">OpenAI TTS</span>
+      <span class="stack-tag">expo-av</span>
+      <span class="stack-tag">AsyncStorage</span>
+      <span class="stack-tag">react-native-svg</span>
+      <span class="stack-tag">Animated API</span>
+      <span class="stack-tag">Built with Claude Code</span>
+    </div>
+
+    <div class="status-banner">
+      <div class="status-dot"></div>
+      <p class="status-text"><span>Active development.</span> Being is a personal project currently in the prototype stage. Not publicly released yet — but getting closer.</p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="index.html">← back to lujain deen</a>
+  </footer>
+
+</body>
+</html>
