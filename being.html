@@ -64,7 +64,57 @@
       border-radius: 100px;
       padding: 4px 12px;
       letter-spacing: 0.08em;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
+    .nav-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--foliage);
+      box-shadow: 0 0 0 0 rgba(63,107,74,0.5);
+      animation: livePulse 2s ease-in-out infinite;
+    }
+    @keyframes livePulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(63,107,74,0.5); }
+      50% { box-shadow: 0 0 0 4px rgba(63,107,74,0); }
+    }
+
+    /* ── HERO CTAs ── */
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+      justify-content: center;
+    }
+    .hero-cta {
+      font-family: 'JetBrains Mono', monospace;
+      font-style: italic;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      padding: 11px 22px;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: transform .15s ease, background .2s ease, border-color .2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .hero-cta.primary {
+      background: var(--foliage);
+      color: #fff;
+      border: 1px solid var(--foliage);
+    }
+    .hero-cta.primary:hover { background: #345b3e; transform: translateY(-1px); }
+    .hero-cta.secondary {
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid var(--border);
+    }
+    .hero-cta.secondary:hover { border-color: var(--ink); transform: translateY(-1px); }
 
     /* ── HERO ── */
     .hero {
@@ -307,7 +357,7 @@
     <a href="index.html" class="nav-back">← back</a>
     <span class="nav-sep">/</span>
     <span class="nav-title">Being</span>
-    <span class="nav-badge">in development</span>
+    <span class="nav-badge">live</span>
   </nav>
 
   <!-- HERO -->
@@ -337,6 +387,15 @@
     <p class="hero-desc">
       A mental health companion app for people who live on autopilot — stuck, overthinking, or carrying something heavy they haven't said out loud yet.
     </p>
+
+    <div class="hero-ctas">
+      <a href="https://being-web-two.vercel.app" target="_blank" rel="noopener" class="hero-cta primary">
+        try it live ↗
+      </a>
+      <a href="https://github.com/lujaindeen/being-web" target="_blank" rel="noopener" class="hero-cta secondary">
+        view source ↗
+      </a>
+    </div>
   </div>
 
   <!-- THE IDEA -->
@@ -443,7 +502,7 @@
 
     <div class="status-banner">
       <div class="status-dot"></div>
-      <p class="status-text"><span>Active development.</span> Being is a personal project currently in the prototype stage. Not publicly released yet — but getting closer.</p>
+      <p class="status-text"><span>Live now.</span> Being is a personal project, freshly shipped as a web app at <a href="https://being-web-two.vercel.app" target="_blank" rel="noopener" style="color:var(--foliage);text-decoration:underline;">being-web-two.vercel.app</a>. Source is open at <a href="https://github.com/lujaindeen/being-web" target="_blank" rel="noopener" style="color:var(--foliage);text-decoration:underline;">github.com/lujaindeen/being-web</a>.</p>
     </div>
   </div>
 
